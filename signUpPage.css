@@ -198,4 +198,10 @@ form{
     font-size: 16px;
     font-weight: 600;
     color: rgb(28, 63, 82);
+
+    transition: border-color .3s;
+}
+
+#signButton:hover{
+    border-color: white;
 }
