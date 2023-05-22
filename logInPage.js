@@ -49,31 +49,30 @@ window.onload = () => {
         logoDiv.style.height = getComputedStyle(logoDiv).width
     })
 
-    const signButton = document.getElementById("signButton")
-    const tcBox = document.getElementById("tcCheck")
+    const signButton = document.getElementById("loginButton")
     signButton.addEventListener("click", () => {
         const cond1 = textInputs[0].value.trim() != ""
         const cond2 = password != ""
-        const cond3 = tcBox.checked
-        const cond4 = (window.localStorage.getItem(textInputs[0].value.trim())) ? false : true
+        const userpass = (cond1) ? window.localStorage.getItem(textInputs[0].value.trim()) : null
+        const cond3 = (userpass) ? true : false
+        const cond4 = (cond3 && cond2 && userpass == password)
         const conds = [cond1, cond2, cond3, cond4].every(elem => elem == true)
         if (conds) {
-            signButton.style.color = "rgba(219, 241, 254, 0.6)"
-            signButton.style.backgroundImage = "linear-gradient(0deg, rgba(145, 191, 224, 0.3) 20%, rgba(69, 87, 98, 0.6) 180%)"
-            window.localStorage.setItem(textInputs[0].value.trim(), password)
+            signButton.style.color = "rgba(254, 238, 219, 0.6)"
+            signButton.style.backgroundImage = "linear-gradient(180deg, rgba(87, 51, 33) 20%, rgba(207, 167, 115) 180%)"
             setTimeout(() => {
                 location.href = "homePage.html"
             }, 500)
         }
         else {
             if (cond1 == false)
-                window.alert("You need to provide a Username for the account")
+                window.alert("A Username is required to log in")
             if (cond2 == false)
-                window.alert("You need to provide a Password for the account")
-            if (cond3 == false)
-                window.alert("You need to agree to the Terms and Conditions before Signing Up")
-            if (cond4 == false)
-                window.alert("User already exists")
+                window.alert("A Password is required to log in")
+            else if (cond1 && cond3 == false)
+                window.alert("User does not exist. Sign Up if you didn't already")
+            else if (cond1 && cond2 && cond4 == false)
+                window.alert("Password is incorrect")
         }
     })
 }
