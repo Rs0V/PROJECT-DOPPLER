@@ -61,6 +61,7 @@ window.onload = () => {
             signButton.style.color = "rgba(219, 241, 254, 0.6)"
             signButton.style.backgroundImage = "linear-gradient(0deg, rgba(145, 191, 224, 0.3) 20%, rgba(69, 87, 98, 0.6) 180%)"
             window.localStorage.setItem(textInputs[0].value.trim(), password)
+            window.localStorage.setItem("LogedInAs", textInputs[0].value.trim())
             setTimeout(() => {
                 location.href = "homePage.html"
             }, 500)
@@ -68,12 +69,15 @@ window.onload = () => {
         else {
             if (cond1 == false)
                 window.alert("You need to provide a Username for the account")
-            if (cond2 == false)
-                window.alert("You need to provide a Password for the account")
-            if (cond3 == false)
-                window.alert("You need to agree to the Terms and Conditions before Signing Up")
-            if (cond4 == false)
+            else if (cond4 == false)
                 window.alert("User already exists")
+            else {
+                if (cond2 == false)
+                    window.alert("You need to provide a Password for the account")
+                if (cond3 == false)
+                    window.alert("You need to agree to the Terms and Conditions before Signing Up")
+            }
+            
         }
     })
 }

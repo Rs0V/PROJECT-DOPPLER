@@ -49,17 +49,19 @@ window.onload = () => {
         logoDiv.style.height = getComputedStyle(logoDiv).width
     })
 
-    const signButton = document.getElementById("loginButton")
-    signButton.addEventListener("click", () => {
+    const loginButton = document.getElementById("loginButton")
+    loginButton.addEventListener("click", () => {
         const cond1 = textInputs[0].value.trim() != ""
         const cond2 = password != ""
         const userpass = (cond1) ? window.localStorage.getItem(textInputs[0].value.trim()) : null
         const cond3 = (userpass) ? true : false
         const cond4 = (cond3 && cond2 && userpass == password)
         const conds = [cond1, cond2, cond3, cond4].every(elem => elem == true)
+        console.log(password);
         if (conds) {
-            signButton.style.color = "rgba(254, 238, 219, 0.6)"
-            signButton.style.backgroundImage = "linear-gradient(180deg, rgba(87, 51, 33) 20%, rgba(207, 167, 115) 180%)"
+            loginButton.style.color = "rgba(254, 238, 219, 0.6)"
+            loginButton.style.backgroundImage = "linear-gradient(180deg, rgba(87, 51, 33) 20%, rgba(207, 167, 115) 180%)"
+            window.localStorage.setItem("LogedInAs", textInputs[0].value.trim())
             setTimeout(() => {
                 location.href = "homePage.html"
             }, 500)
@@ -67,12 +69,14 @@ window.onload = () => {
         else {
             if (cond1 == false)
                 window.alert("A Username is required to log in")
-            if (cond2 == false)
-                window.alert("A Password is required to log in")
-            else if (cond1 && cond3 == false)
+            else if (cond3 == false)
                 window.alert("User does not exist. Sign Up if you didn't already")
-            else if (cond1 && cond2 && cond4 == false)
-                window.alert("Password is incorrect")
+            else {
+                if (cond2 == false)
+                    window.alert("A Password is required to log in")
+                else if (cond1 && cond2 && cond4 == false)
+                    window.alert("Password is incorrect")
+            }
         }
     })
 }
