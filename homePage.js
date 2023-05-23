@@ -11,7 +11,7 @@ window.onload = () => {
     
     const library = document.getElementById("library")
     library.addEventListener("click", () => {
-        if(window.localStorage.getItem("LogedInAs") && window.localStorage.getItem("LogedInAs") != "none")
+        if(window.localStorage.getItem("LoggedInAs") && window.localStorage.getItem("LoggedInAs") != "none")
             location.href = "libraryPage.html"
         else
             window.alert("You need to be logged in to see your music library")
@@ -19,7 +19,7 @@ window.onload = () => {
     
     const favorites = document.getElementById("favorites")
     favorites.addEventListener("click", () => {
-        if(window.localStorage.getItem("LogedInAs") && window.localStorage.getItem("LogedInAs") != "none")
+        if(window.localStorage.getItem("LoggedInAs") && window.localStorage.getItem("LoggedInAs") != "none")
             location.href = "favoritesPage.html"
         else
             window.alert("You need to be logged in to check your favorite songs")
@@ -47,20 +47,20 @@ window.onload = () => {
     logout.addEventListener("click", () => {
         profileButtonClick(logout)
         setTimeout(() => {
-            window.localStorage.setItem("LogedInAs", "none")
+            window.localStorage.setItem("LoggedInAs", "none")
             location.href = "homePage.html"
         }, 500)
     })
 
-    if(window.localStorage.getItem("LogedInAs") && window.localStorage.getItem("LogedInAs") != "none") {
+    if(window.localStorage.getItem("LoggedInAs") && window.localStorage.getItem("LoggedInAs") != "none") {
         signup.style.display = "none"
         login.style.display = "none"
         profile.style.display = ""
-        profileName.innerHTML = `${window.localStorage.getItem("LogedInAs")}`
+        profileName.innerHTML = `${window.localStorage.getItem("LoggedInAs")}`
         logout.style.display = ""
     }
     else {
-        window.localStorage.setItem("LogedInAs", "none")
+        window.localStorage.setItem("LoggedInAs", "none")
         signup.style.display = ""
         login.style.display = ""
         profile.style.display = "none"
