@@ -203,6 +203,8 @@ form{
     color: rgb(28, 63, 82);
 
     transition: border-color .3s;
+
+    cursor: pointer;
 }
 
 #signButton:hover{
