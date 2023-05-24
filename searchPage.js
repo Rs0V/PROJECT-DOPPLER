@@ -107,6 +107,32 @@ window.onload = () => {
         })
     })
 
+    window.addEventListener('keypress', event => {
+        if (event.key === "Enter") {
+            let searchTokens = searchBar.value.trim().split(" ").filter(elem => elem != " " && elem != "").map(token => token.toLowerCase())
+            genres.forEach(genre => {
+                const paragraph = [...genre.getElementsByTagName("p")][0].innerHTML.toLowerCase()
+
+                if (searchTokens.length > 0) {
+                    let matched = false
+
+                    for(let i = 0; i < searchTokens.length; ++i) {
+                        if (paragraph.search(searchTokens[i]) > -1) {
+                            matched = true
+                            break
+                        }
+                    }
+                    if (matched == true)
+                        genre.style.display = ""
+                    else
+                        genre.style.display = "none"
+                }
+                else
+                    genre.style.display = ""
+            })
+        }
+    })
+
     searchButton.addEventListener("mousedown", () => {
         searchButton.style.backgroundColor = "rgb(70, 70, 70)"
     })
