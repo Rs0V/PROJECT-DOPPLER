@@ -135,6 +135,10 @@ form{
     -webkit-user-drag: none;
 }
 
+.form-text:focus{
+    outline: 0;
+}
+
 
 
 #TC{
