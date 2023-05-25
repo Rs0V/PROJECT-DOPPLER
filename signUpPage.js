@@ -41,7 +41,7 @@ window.onload = () => {
             else {
                 if (cond2 == false)
                     window.alert("You need to provide a Password for the account")
-                if (cond3 == false)
+                else if (cond3 == false)
                     window.alert("You need to agree to the Terms and Conditions before Signing Up")
             }
             
