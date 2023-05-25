@@ -240,7 +240,7 @@ window.onload = () => {
                 ol.style.opacity = "0"
                 ol.style.pointerEvents = "none"
             })
-            songButtons.forEach((sb, index) => {
+            songButtons.forEach((sb, sbIndex) => {
                 sb.addEventListener("mouseover", () => {
                     sb.style.background = "rgb(50, 50, 50)"
                 })
@@ -256,8 +256,8 @@ window.onload = () => {
                         ol.style.pointerEvents = "none"
                     })
 
-                    optionLists[index].style.opacity = ""
-                    optionLists[index].style.pointerEvents = ""
+                    optionLists[sbIndex].style.opacity = ""
+                    optionLists[sbIndex].style.pointerEvents = ""
                 })
                 sb.addEventListener("mousedown", () => {
                     sb.style.background = "rgb(30, 30, 30)"
@@ -342,33 +342,46 @@ window.onload = () => {
 
             // STYLE OPTION BUTTONS ON MOUSE HOVER AND PRESS
             const optionButtons = [...unwrappedSongsList.getElementsByClassName("song-options")].map(so => [...so.getElementsByTagName("button")]).flat(1)
-            optionButtons.forEach((ob, index) => {
+            optionButtons.forEach((ob, obIndex) => {
                 ob.addEventListener("mouseover", () => {
                     ob.style.background = "linear-gradient(rgb(100, 100, 100), 60%, rgb(180, 180, 180))"
                 })
                 ob.addEventListener("mouseout", () => {
                     ob.style.background = "linear-gradient(transparent, 80%, rgb(200, 200, 200))"
                 })
-                if (index % 3 == 0) {
+                if (obIndex % 3 == 0) {
                     ob.addEventListener("click", event => {
                         event.stopPropagation()
-                        const _song = songsMap[Math.round(index / songsMap.length)]
+                        const _song = songsMap[Math.floor(obIndex / 3)]
                         location.href = _song[1]
                     })
                 }
-                else if (index % 3 == 1) {
+                else if (obIndex % 3 == 1) {
                     ob.addEventListener("click", event => {
                         event.stopPropagation()
-                        const _song = songsMap[Math.round(index / songsMap.length)]
+                        const _song = songsMap[Math.floor(obIndex / 3)]
                         const user = window.localStorage.getItem("LoggedInAs")
                         if (user && user != "none") {
                             const lib = window.localStorage.getItem(`${user}-lib`)
-                            if (lib != null)
-                                window.localStorage.setItem(`${user}-lib`, `${lib}, {${_song[0]}, ${_song[1]}}`)
+                            let songInLib = false
+
+                            if (lib != null) {
+                                if (lib == "" || lib == "none")
+                                    window.localStorage.setItem(`${user}-lib`, `{${_song[0]}, ${_song[1]}}`)
+                                else {
+                                    if (lib.search(_song[0]) < 0)
+                                        window.localStorage.setItem(`${user}-lib`, `${lib}, {${_song[0]}, ${_song[1]}}`)
+                                    else
+                                        songInLib = true
+                                }
+                            }
                             else
                                 window.localStorage.setItem(`${user}-lib`, `{${_song[0]}, ${_song[1]}}`)
                             
-                            window.alert(`"${_song[0]}" was added to your library`)
+                            if (songInLib == true)
+                                window.alert(`"${_song[0]}" is already in your library`)
+                            else
+                                window.alert(`"${_song[0]}" was added to your library`)
                         }
                         else
                             window.alert("You need to be logged in to add songs to your library")
@@ -377,16 +390,29 @@ window.onload = () => {
                 else {
                     ob.addEventListener("click", event => {
                         event.stopPropagation()
-                        const _song = songsMap[Math.round(index / songsMap.length)]
+                        const _song = songsMap[Math.floor(obIndex / 3)]
                         const user = window.localStorage.getItem("LoggedInAs")
                         if (user && user != "none") {
                             const favs = window.localStorage.getItem(`${user}-favs`)
-                            if (favs != null)
-                                window.localStorage.setItem(`${user}-favs`, `${favs}, {${song.innerHTML}, ${song.href}}`)
-                            else
-                                window.localStorage.setItem(`${user}-favs`, `{${song.innerHTML}, ${song.href}}`)
+                            let songInFavs = false
 
-                            window.alert(`"${_song[0]}" was added to your favorites`)
+                            if (favs != null) {
+                                if (favs == "" || favs == "none")
+                                    window.localStorage.setItem(`${user}-favs`, `{${_song[0]}, ${_song[1]}}`)
+                                else {
+                                    if (favs.search(_song[0]) < 0)
+                                        window.localStorage.setItem(`${user}-favs`, `${favs}, {${_song[0]}, ${_song[1]}}`)
+                                    else
+                                        songInFavs = true
+                                }
+                            }
+                            else
+                                window.localStorage.setItem(`${user}-favs`, `{${_song[0]}, ${_song[1]}}`)
+                            
+                            if (songInFavs == true)
+                                window.alert(`"${_song[0]}" is already in your favorites`)
+                            else
+                                window.alert(`"${_song[0]}" was added to your favorites`)
                         }
                         else
                             window.alert("You need to be logged in to add songs to your favorites")

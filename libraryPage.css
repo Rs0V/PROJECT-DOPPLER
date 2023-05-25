@@ -1,0 +1,29 @@
+*{
+    user-select: none;
+    -webkit-user-drag: none;
+
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body{
+    background: rgb(10, 10, 10);
+    overflow-x: hidden;
+}
+
+main{
+    display: inline-flex;
+    flex-direction: column;
+
+    min-height: calc(100vh - 54px);
+    width: calc(100vw - 40px);
+
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+
+    background: rgb(20, 20, 20);
+    border-radius: 36px;
+}
